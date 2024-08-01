@@ -135,6 +135,6 @@ class MainApplication(tk.Frame):
 if __name__ == "__name__":
     conn = DBConn(host="localhost", dbname="test", user="amit4", password="310795", port=5432)
     root = tk.Tk()
-    MainApplication(root, DBJobs(conn))
+    MainApplication(root, DBJobs(conn, 'C:/Users/amit4/Desktop/Jobs/status_on_jobs.csv'))
     root.mainloop()
     conn.close()

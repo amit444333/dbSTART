@@ -17,8 +17,9 @@ class DBConn:
         self.conn.close()
     
 class DBJobs:
-    def __init__(self, conn:DBConn):
+    def __init__(self, conn:DBConn, csv_file_path='Jobs/status_on_jobs.csv'):
         self.conn = conn
+        self.csv_file_path = csv_file_path
     
     """
     Prints all jobs from the 'jobs' table.
@@ -50,7 +51,7 @@ class DBJobs:
 
         sqlstr = "INSERT INTO jobs (job_uid, company, job_name, status) VALUES (uuid_generate_v4(), %s, %s, %s);"
         cur.execute(sqlstr, (company, name, status))
-        with open('C:/Users/amit4/Desktop/Jobs/status_on_jobs.csv', 'w') as f:
+        with open(self.csv_file_path, 'w') as f:
             cur.copy_to(file=f, table='jobs', sep=',')
 
         cur.close()
@@ -72,7 +73,7 @@ class DBJobs:
         sqlstr2 = "UPDATE jobs SET status = %s WHERE job_uid = %s"
         cur.execute(sqlstr2, (stat, id))
 
-        with open('C:/Users/amit4/Desktop/Jobs/status_on_jobs.csv', 'w') as f:
+        with open(self.csv_file_path, 'w') as f:
             cur.copy_to(file=f, table='jobs', sep=',')
 
         cur.close()
@@ -92,7 +93,7 @@ class DBJobs:
         sqlstr2 = f"DELETE FROM jobs WHERE job_uid = '{id}'"
         cur.execute(sqlstr2)
 
-        with open('C:/Users/amit4/Desktop/Jobs/status_on_jobs.csv', 'w') as f:
+        with open(self.csv_file_path, 'w') as f:
             cur.copy_to(file=f, table='jobs', sep=',')
 
         cur.close()
