@@ -132,7 +132,7 @@ class MainApplication(tk.Frame):
     def quit_app(self):
         self.parent.quit()  # Close the entire application window
 
-if __name__ == "__name__":
+if __name__ == "__main__":
     conn = DBConn(host="localhost", dbname="test", user="amit4", password="310795", port=5432)
     root = tk.Tk()
     MainApplication(root, DBJobs(conn, 'C:/Users/amit4/Desktop/Jobs/status_on_jobs.csv'))
