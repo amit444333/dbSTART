@@ -79,7 +79,7 @@ class MainApplication(tk.Frame):
 
         try:
             # Call the add_job function with the retrieved input
-            dbj.add_job(company, name, status)
+            self.dbj.add_job(company, name, status)
             messagebox.showinfo("Success", "Job added successfully!")
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
@@ -95,7 +95,7 @@ class MainApplication(tk.Frame):
 
         try:
             # Call the update_job function with the retrieved input
-            dbj.update_job(job_uid, new_status)
+            self.dbj.update_job(job_uid, new_status)
             messagebox.showinfo("Success", "Job updated successfully!")
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
@@ -110,7 +110,7 @@ class MainApplication(tk.Frame):
 
         try:
             # Call the delete_job function with the retrieved input
-            dbj.delete_job(job_uid)
+            self.dbj.delete_job(job_uid)
             messagebox.showinfo("Success", "Job deleted successfully!")
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
@@ -125,7 +125,7 @@ class MainApplication(tk.Frame):
         jobs_text.pack()
 
         # Retrieve job entries and insert them into the text widget
-        jobs = dbj.print_jobs()  # Assuming print_jobs() returns a list of job entries
+        jobs = self.dbj.print_jobs()  # Assuming print_jobs() returns a list of job entries
         for job in jobs:
             jobs_text.insert(tk.END, f"{job}\n")
 
