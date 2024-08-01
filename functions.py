@@ -1,6 +1,8 @@
 import psycopg2
 
 
+# BE ADVISED, THIS CONNECT TO MY DATABASE, IN ORDER TO WORK YOU MUST CHANGE THE CONFIGURATIONS.
+
 """
 Prints all jobs from the 'jobs' table.
 
