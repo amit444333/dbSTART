@@ -14,13 +14,12 @@ def print_jobs():
 
     cur.execute("SELECT * FROM jobs ORDER BY status, company;")
 
-    for row in cur.fetchall():
-        print(row)
+    jobs_rows = cur.fetchall()
 
     conn.commit()
     cur.close()
     conn.close()
-
+    return jobs_rows
 
 """
 Adds a new job to the 'jobs' table.
@@ -32,13 +31,12 @@ Parameters:
 
 No return value.
 """
-def add_job():
+def add_job(company, name, status):
+
+
     conn = psycopg2.connect(host="localhost", dbname="test", user="amit4", password="310795", port=5432)
     cur = conn.cursor()
 
-    company = input('Please enter the job company: ')
-    name = input('Please enter the job name: ')
-    status = input('Please enter the job status (Approved, Declined, Pending): ')
 
     sqlstr = "INSERT INTO jobs (job_uid, company, job_name, status) VALUES (uuid_generate_v4(), %s, %s, %s);"
     cur.execute(sqlstr, (company, name, status))
@@ -59,12 +57,10 @@ Parameters:
 
 No return value.
 """
-def update_job():
+def update_job(id, stat):
     conn = psycopg2.connect(host="localhost", dbname="test", user="amit4", password="310795", port=5432)
     cur = conn.cursor()
 
-    id = input('Please enter the job_uid: ')
-    stat = input('Enter the status change (Approved, Declined, Pending): ')
 
     sqlstr2 = "UPDATE jobs SET status = %s WHERE job_uid = %s"
     cur.execute(sqlstr2, (stat, id))
@@ -85,11 +81,10 @@ Parameters:
 
 No return value.
 """
-def delete_job():
+def delete_job(id):
     conn = psycopg2.connect(host="localhost", dbname="test", user="amit4", password="310795", port=5432)
     cur = conn.cursor()
 
-    id = input('Please enter the job_uid for the job to delete: ')
 
     sqlstr2 = f"DELETE FROM jobs WHERE job_uid = '{id}'"
     cur.execute(sqlstr2)
