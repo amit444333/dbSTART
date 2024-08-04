@@ -8,6 +8,6 @@ REQUIREMENTS:
 
 
 FEATURES:
-1. Automataclly connect to PostgreSql so no need to manually connect every time.
-2. Automataclly saves on a .csv file the current applications (on defualt the file will be in the project directory, but you can change it to save whereever you want)
+1. Automatically connect to PostgreSql so no need to manually connect every time.
+2. Automatically saves on a .csv file the current applications (on default the file will be in the project directory, but you can change it to save wherever you want)
 3. Add, Update, Delete, Print jobs with a simple click.
