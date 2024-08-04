@@ -28,6 +28,7 @@ class DBJobs:
     """
     def print_jobs(self):
         cur = self.conn.get_cursor()
+        cur.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
 
         cur.execute("SELECT * FROM jobs ORDER BY status, company;")
 
@@ -48,6 +49,7 @@ class DBJobs:
     """
     def add_job(self, company, name, status):
         cur = self.conn.get_cursor()
+        cur.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
 
         sqlstr = "INSERT INTO jobs (job_uid, company, job_name, status) VALUES (uuid_generate_v4(), %s, %s, %s);"
         cur.execute(sqlstr, (company, name, status))
@@ -68,6 +70,7 @@ class DBJobs:
     """
     def update_job(self, id, stat):
         cur = self.conn.get_cursor()
+        cur.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
 
 
         sqlstr2 = "UPDATE jobs SET status = %s WHERE job_uid = %s"
@@ -89,6 +92,7 @@ class DBJobs:
     """
     def delete_job(self, id):
         cur = self.conn.get_cursor()
+        cur.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
 
         sqlstr2 = f"DELETE FROM jobs WHERE job_uid = '{id}'"
         cur.execute(sqlstr2)
