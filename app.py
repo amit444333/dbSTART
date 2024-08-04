@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import messagebox, ttk  # Import the messagebox module
 from functions import DBConn, DBJobs
@@ -133,8 +134,8 @@ class MainApplication(tk.Frame):
         self.parent.quit()  # Close the entire application window
 
 if __name__ == "__main__":
-    conn = DBConn(host="localhost", dbname="test", user="amit4", password="310795", port=5432)
+    conn = DBConn(host=os.environ['HOST'], dbname=os.environ['DBNAME'], user=os.environ['USER'], password=os.environ['PASSWORD'], port=os.environ['PORT'])
     root = tk.Tk()
-    MainApplication(root, DBJobs(conn, 'C:/Users/amit4/Desktop/Jobs/status_on_jobs.csv'))
+    MainApplication(root, DBJobs(conn, os.environ['CSV_PATH']))
     root.mainloop()
     conn.close()
