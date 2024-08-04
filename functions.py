@@ -9,6 +9,12 @@ class DBConn:
     def __init__(self, host, dbname, user, password, port):
         self.conn = psycopg2.connect(host=host, dbname=dbname, user=user, password=password, port=port)
         self.conn.autocommit = True
+        self.conn.cursor().execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
+        self.conn.cursor().execute("CREATE TABLE IF NOT EXISTS jobs ("
+                                   "job_uid UUID NOT NULL PRIMARY KEY,"
+                                   "company VARCHAR(50) NOT NULL,"
+                                   "job_name VARCHAR(100) NOT NULL,"
+                                   "status VARCHAR(10) NOT NULL CHECK (status = 'Approved' OR status = 'Declined' OR status = 'Pending'));")
 
     def get_cursor(self):
         return self.conn.cursor()
@@ -28,7 +34,6 @@ class DBJobs:
     """
     def print_jobs(self):
         cur = self.conn.get_cursor()
-        cur.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
 
         cur.execute("SELECT * FROM jobs ORDER BY status, company;")
 
@@ -49,7 +54,6 @@ class DBJobs:
     """
     def add_job(self, company, name, status):
         cur = self.conn.get_cursor()
-        cur.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
 
         sqlstr = "INSERT INTO jobs (job_uid, company, job_name, status) VALUES (uuid_generate_v4(), %s, %s, %s);"
         cur.execute(sqlstr, (company, name, status))
@@ -70,7 +74,6 @@ class DBJobs:
     """
     def update_job(self, id, stat):
         cur = self.conn.get_cursor()
-        cur.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
 
 
         sqlstr2 = "UPDATE jobs SET status = %s WHERE job_uid = %s"
@@ -92,7 +95,6 @@ class DBJobs:
     """
     def delete_job(self, id):
         cur = self.conn.get_cursor()
-        cur.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
 
         sqlstr2 = f"DELETE FROM jobs WHERE job_uid = '{id}'"
         cur.execute(sqlstr2)
